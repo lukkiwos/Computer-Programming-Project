@@ -1,3 +1,4 @@
+# models.py
 from extensions import db
 
 class Game(db.Model):
@@ -5,7 +6,7 @@ class Game(db.Model):
     igdb_id = db.Column(db.Integer, unique=True, nullable=False)
     name = db.Column(db.String(255), nullable=False)
     rating = db.Column(db.Float)
-    release_date = db.Column(db.Integer)
+    release_date = db.Column(db.String(20)) 
     cover_url = db.Column(db.String(255))
 
     def __repr__(self):

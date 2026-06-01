@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, jsonify
 from extensions import db
 from models import Game
 from services.igdb_service import search_games
@@ -113,3 +113,33 @@ def delete_game(id):
         db.session.commit()
 
     return redirect("/my-games")
+
+
+@main.route("/api/games", methods=["GET"])
+def api_get_games():
+    games = Game.query.all()
+    games_list = []
+    for g in games:
+        games_list.append({
+            "id": g.id,
+            "igdb_id": g.igdb_id,
+            "name": g.name,
+            "rating": g.rating,
+            "release_date": g.release_date
+        })
+    return jsonify({"status": "success", "data": games_list}), 200
+
+@main.route("/api/games/<int:id>", methods=["PUT"])
+def api_update_game(id):
+    game = Game.query.get(id)
+    if not game:
+        return jsonify({"status": "error", "message": "Gra nie znaleziona"}), 404
+
+    data = request.get_json()
+    
+    if "rating" in data:
+        game.rating = data["rating"]
+        db.session.commit()
+        return jsonify({"status": "success", "message": "Zaktualizowano ocenę"}), 200
+        
+    return jsonify({"status": "error", "message": "Brak danych do aktualizacji"}), 400

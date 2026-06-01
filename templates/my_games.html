@@ -49,7 +49,7 @@
                     <h5>{{ game.name }}</h5>
 
                     {% if game.rating %}
-                        <p>⭐ {{ game.rating }}</p>
+                        <p>⭐ {{ game.rating|round(1) }}</p>
                     {% endif %}
 
                     {% if game.release_date %}

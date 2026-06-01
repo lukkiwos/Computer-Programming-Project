@@ -7,7 +7,9 @@
 
 
 ### 1. Przygotowanie środowiska wirtualnego ###
-Otwórz terminal w głównym folderze projektu (FlaskProjekt) i utwórz środowisko wirtualne: ``python -m venv venv``
+Otwórz terminal w głównym folderze projektu (FlaskProjekt) i utwórz środowisko wirtualne: 
+``python -m venv venv``
+
 Następnie aktywuj środowisko wirtualne:
 - Windows (PowerShell): ``.\\venv\\Scripts\\Activate.ps1``
 - Windows (CMD): ``.\\venv\\Scripts\\activate.bat``
@@ -15,13 +17,14 @@ Następnie aktywuj środowisko wirtualne:
 
 
 ### 2. Instalacja wymaganych bibliotek ###
-Gdy środowisko jest aktywne (widoczny napis (venv) w terminalu), zainstaluj zależności: ``pip install -r requirements.txt``
+Gdy środowisko jest aktywne (widoczny napis (venv) w terminalu), zainstaluj zależności: 
+``pip install -r requirements.txt``
 
 
 ### 3. Konfiguracja zmiennych środowiskowych (.env) ###
 Utwórz w głównym folderze plik o nazwie .env i uzupełnij go kluczami deweloperskimi z Twitch Developer Portal:
-``CLIENT_ID=...``
-``CLIENT_SECRET=...``
+```CLIENT_ID=...``` 
+```CLIENT_SECRET=...```
 
 
 ### 4. Uruchomienie aplikacji ###

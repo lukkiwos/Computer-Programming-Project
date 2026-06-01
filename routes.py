@@ -8,7 +8,7 @@ from flask import redirect, flash
 main = Blueprint("main", __name__)
 
 
-# Strona główna + wyszukiwanie + sortowanie
+
 @main.route("/", methods=["GET"])
 def home():
     from flask import request
@@ -21,7 +21,6 @@ def home():
     games = []
 
     if name:
-        # 🌐 tylko IGDB — bez zapisu
         games = search_games(name)
 
         for g in games:
@@ -30,7 +29,6 @@ def home():
                     g["first_release_date"]
                 ).strftime("%Y-%m-%d")
 
-    # 🔽 sortowanie
     if sort == "rating":
         games.sort(key=lambda x: x.get("rating", 0), reverse=(order == "desc"))
 
@@ -42,7 +40,7 @@ def home():
 
     return render_template("index.html", games=games)
 
-# 💾 Dodawanie gry do bazy
+
 @main.route("/add-game", methods=["POST"])
 def add_game():
     igdb_id = request.form.get("igdb_id")
@@ -68,7 +66,7 @@ def add_game():
 
     return redirect(request.referrer or "/")
 
-# 📚 Lista zapisanych gier (na razie JSON)
+
 @main.route("/my-games")
 def my_games():
     search = request.args.get("search")
@@ -77,11 +75,9 @@ def my_games():
 
     query = Game.query
 
-    # 🔍 filtrowanie
     if search:
         query = query.filter(Game.name.ilike(f"%{search}%"))
 
-    # 🔽 sortowanie
     if sort == "rating":
         if order == "asc":
             query = query.order_by(Game.rating.asc())
@@ -103,6 +99,7 @@ def my_games():
     games = query.all()
 
     return render_template("my_games.html", games=games)
+
 
 @main.route("/delete-game/<int:id>", methods=["POST"])
 def delete_game(id):
@@ -128,6 +125,7 @@ def api_get_games():
             "release_date": g.release_date
         })
     return jsonify({"status": "success", "data": games_list}), 200
+
 
 @main.route("/api/games/<int:id>", methods=["PUT"])
 def api_update_game(id):
